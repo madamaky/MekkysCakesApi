@@ -1,0 +1,66 @@
+[
+  {
+    "Name": "Triple Chocolate Fudge",
+    "Description": "A rich, dense chocolate sponge layered with silky ganache and topped with artisan chocolate shavings.",
+    "Price": 45.00,
+    "PictureUrl": "images/products/choc-fudge.jpg",
+    "TypeId": 1,
+    "ThemeId": 1
+  },
+  {
+    "Name": "Vanilla Bean Confetti",
+    "Description": "Light and airy vanilla sponge packed with colorful sprinkles, finished with a classic buttercream frosting.",
+    "Price": 40.00,
+    "PictureUrl": "images/products/vanilla-confetti.jpg",
+    "TypeId": 1,
+    "ThemeId": 2
+  },
+  {
+    "Name": "Elegant Rose Tier",
+    "Description": "A two-tier white velvet cake adorned with edible fondant roses and gold leaf accents. Perfect for intimate receptions.",
+    "Price": 150.00,
+    "PictureUrl": "images/products/wedding-rose.jpg",
+    "TypeId": 1,
+    "ThemeId": 3
+  },
+  {
+    "Name": "Red Velvet Cupcake",
+    "Description": "Classic southern red velvet sponge topped with a generous swirl of cream cheese frosting.",
+    "Price": 4.50,
+    "PictureUrl": "images/products/cupcake-redvelvet.jpg",
+    "TypeId": 2,
+    "ThemeId": 1
+  },
+  {
+    "Name": "Unicorn Magic Cupcake",
+    "Description": "A fun vanilla cupcake with rainbow swirl frosting and a fondant unicorn horn.",
+    "Price": 5.50,
+    "PictureUrl": "images/products/cupcake-unicorn.jpg",
+    "TypeId": 2,
+    "ThemeId": 2
+  },
+  {
+    "Name": "Gingerbread Man Set",
+    "Description": "A pack of 6 spiced gingerbread cookies decorated with royal icing. A holiday favorite.",
+    "Price": 12.00,
+    "PictureUrl": "images/products/cookie-ginger.jpg",
+    "TypeId": 3,
+    "ThemeId": 4
+  },
+  {
+    "Name": "Salted Caramel Drip",
+    "Description": "Toasted caramel sponge cake with a salted caramel drip glaze and macaron toppers.",
+    "Price": 55.00,
+    "PictureUrl": "images/products/caramel-drip.jpg",
+    "TypeId": 1,
+    "ThemeId": 1
+  },
+  {
+    "Name": "Pink Champagne Cake Pop",
+    "Description": "Cake truffle infused with pink champagne flavor, dipped in white chocolate and pink sugar.",
+    "Price": 3.00,
+    "PictureUrl": "images/products/pop-champagne.jpg",
+    "TypeId": 4,
+    "ThemeId": 3
+  }
+]

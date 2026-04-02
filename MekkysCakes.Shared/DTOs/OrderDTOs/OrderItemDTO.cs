@@ -1,0 +1,11 @@
+﻿namespace MekkysCakes.Shared.DTOs.OrderDTOs
+{
+    public class OrderItemDTO
+    {
+        public string ProductName { get; init; } = default!;
+        public string PictureUrl { get; init; } = default!;
+        public decimal Price { get; init; }
+        public int Quantity { get; init; }
+        public string? CustomMessage { get; set; }
+    }
+}

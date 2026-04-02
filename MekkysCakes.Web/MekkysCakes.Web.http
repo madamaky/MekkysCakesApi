@@ -1,0 +1,6 @@
+@MekkysCakes.Web_HostAddress = http://localhost:5018
+
+GET {{MekkysCakes.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

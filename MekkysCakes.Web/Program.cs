@@ -1,0 +1,142 @@
+using System.Text;
+using MekkysCakes.Domain.Contracts;
+using MekkysCakes.Domain.Entities.IdentityModule;
+using MekkysCakes.Persistence.Data.DataSeed;
+using MekkysCakes.Persistence.Data.DbContexts;
+using MekkysCakes.Persistence.IdentityData.DataSeed;
+using MekkysCakes.Persistence.IdentityData.DbContexts;
+using MekkysCakes.Persistence.Repositories;
+using MekkysCakes.Services;
+using MekkysCakes.Services.Abstraction;
+using MekkysCakes.Web.CustomMiddlewares;
+using MekkysCakes.Web.Extensions;
+using MekkysCakes.Web.Factories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
+using StackExchange.Redis;
+
+namespace MekkysCakes.Web
+{
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            #region Add Services To The Container
+
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+
+            builder.Services.AddDbContext<StoreDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+            builder.Services.AddSingleton<IConnectionMultiplexer>(SP =>
+            {
+                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
+            });
+            builder.Services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
+
+            builder.Services.AddIdentityCore<ApplicationUser>() // Add Options if needed
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidIssuer = builder.Configuration["JWTOptions:Issuer"],
+                        ValidAudience = builder.Configuration["JWTOptions:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTOptions:SecretKey"]!))
+                    };
+                });
+
+            builder.Services.AddKeyedScoped<IDataInitializer, DataInitializer>("Default");
+            builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(ServicesAssemblyReference).Assembly);
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+            builder.Services.AddScoped<IBasketService, BasketService>();
+            builder.Services.AddScoped<ICacheRepository, CacheRepository>();
+            builder.Services.AddScoped<ICacheService, CacheService>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IWishlistService, WishlistService>();
+
+            // Replace this with FluentValidation
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationResponse;
+            });
+
+            #endregion
+
+            var app = builder.Build();
+
+            #region Data Seeding
+
+            await app.MigrateDatabaseAsync();
+            await app.MigrateIdentityDatabaseAsync();
+            await app.SeedDatabaseAsync();
+            await app.SeedIdentityDatabaseAsync();
+
+            #endregion
+
+            #region Configure The HTTP Request Pipeline 
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
+            app.UseSwagger();
+            app.MapScalarApiReference(options =>
+            {
+                options.WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");
+            });
+
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapGet("/", context =>
+            {
+                context.Response.Redirect("/scalar");
+                return Task.CompletedTask;
+            });
+            app.MapControllers();
+
+            #endregion
+
+            app.Run();
+        }
+    }
+}
