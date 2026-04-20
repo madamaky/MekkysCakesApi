@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MekkysCakes.Shared", "Mekky
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MekkysCakes.Presentation", "MekkysCakes.Presentation\MekkysCakes.Presentation.csproj", "{74070C5C-254C-4AFF-9ECC-378EF70EEC06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MekkysCakes.Application", "MekkysCakes.Application\MekkysCakes.Application.csproj", "{A14AA04F-B075-44D3-B5CE-954BB2A7E6B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{74070C5C-254C-4AFF-9ECC-378EF70EEC06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74070C5C-254C-4AFF-9ECC-378EF70EEC06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74070C5C-254C-4AFF-9ECC-378EF70EEC06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A14AA04F-B075-44D3-B5CE-954BB2A7E6B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A14AA04F-B075-44D3-B5CE-954BB2A7E6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A14AA04F-B075-44D3-B5CE-954BB2A7E6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A14AA04F-B075-44D3-B5CE-954BB2A7E6B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{B4FC3642-F5F2-43FD-A17B-B8D8597E5804} = {A7063D55-16E8-4F53-8C7E-AFF26A756EE8}
 		{4442944B-9150-4A17-8FE6-DAA13AAFA75E} = {5904FDCD-F6F6-43F9-86DF-210CA4DE9D9F}
 		{74070C5C-254C-4AFF-9ECC-378EF70EEC06} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A14AA04F-B075-44D3-B5CE-954BB2A7E6B9} = {A7063D55-16E8-4F53-8C7E-AFF26A756EE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AFD9C29-59DD-475E-B94A-07997968039A}

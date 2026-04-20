@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using StackExchange.Redis;
+using MekkysCakes.Application;
 
 namespace MekkysCakes.Web
 {
@@ -30,11 +31,16 @@ namespace MekkysCakes.Web
             #region Add Services To The Container
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var presentationXmlFile = "MekkysCakes.Presentation.xml";
+                var presentationXmlPath = Path.Combine(AppContext.BaseDirectory, presentationXmlFile);
+                if (File.Exists(presentationXmlPath))
+                {
+                    options.IncludeXmlComments(presentationXmlPath);
+                }
+            });
             builder.Services.AddDbContext<StoreDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -77,17 +83,16 @@ namespace MekkysCakes.Web
             builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(typeof(ServicesAssemblyReference).Assembly);
-            builder.Services.AddScoped<IProductService, ProductService>();
+
+            builder.Services.AddApplicationServices();
+
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-            builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<ICacheRepository, CacheRepository>();
             builder.Services.AddScoped<ICacheService, CacheService>();
-            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-            builder.Services.AddScoped<IOrderService, OrderService>();
-            builder.Services.AddScoped<IWishlistService, WishlistService>();
+            builder.Services.AddScoped<IIdentityService, IdentityService>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            
 
-            // Replace this with FluentValidation
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationResponse;

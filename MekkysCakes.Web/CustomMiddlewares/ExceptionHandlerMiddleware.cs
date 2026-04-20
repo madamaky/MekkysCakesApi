@@ -1,4 +1,3 @@
-﻿using MekkysCakes.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MekkysCakes.Web.CustomMiddlewares
@@ -30,11 +29,7 @@ namespace MekkysCakes.Web.CustomMiddlewares
                     Title = "Error while processing HTTP request",
                     Detail = ex.Message,
                     Instance = httpContext.Request.Path,
-                    Status = ex switch
-                    {
-                        NotFoundException => StatusCodes.Status404NotFound,
-                        _ => StatusCodes.Status500InternalServerError
-                    }
+                    Status = StatusCodes.Status500InternalServerError
                 };
 
                 httpContext.Response.StatusCode = problem.Status.Value;

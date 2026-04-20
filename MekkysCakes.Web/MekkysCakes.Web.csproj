@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MekkysCakes.Persistence\MekkysCakes.Persistence.csproj" />
     <ProjectReference Include="..\MekkysCakes.Presentation\MekkysCakes.Presentation.csproj" />
+    <ProjectReference Include="..\MekkysCakes.Services\MekkysCakes.Services.csproj" />
   </ItemGroup>
 
 </Project>
