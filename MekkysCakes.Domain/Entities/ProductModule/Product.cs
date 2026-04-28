@@ -8,6 +8,8 @@
         public decimal Price { get; set; }
         public bool InStock { get; set; } = true;
 
+        public decimal AverageRating { get; set; } = 0;
+        public int TotalReviews { get; set; } = 0;
 
         #region Relationships
 

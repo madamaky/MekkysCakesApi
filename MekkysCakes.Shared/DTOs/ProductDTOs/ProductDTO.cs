@@ -10,5 +10,7 @@
         public string ProductType { get; set; } = default!;
         public string ProductTheme { get; set; } = default!;
         public bool InStock { get; set; }
+        public decimal AverageRating { get; set; }
+        public int TotalReviews { get; set; }
     }
 }

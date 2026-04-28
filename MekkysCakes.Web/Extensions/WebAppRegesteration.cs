@@ -1,6 +1,5 @@
 ﻿using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Persistence.Data.DbContexts;
-using MekkysCakes.Persistence.IdentityData.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace MekkysCakes.Web.Extensions
@@ -12,17 +11,6 @@ namespace MekkysCakes.Web.Extensions
             await using var scope = app.Services.CreateAsyncScope();
 
             var dbContextService = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
-            var pendingMigrations = await dbContextService.Database.GetPendingMigrationsAsync();
-            if (pendingMigrations.Any())
-                await dbContextService.Database.MigrateAsync();
-
-            return app;
-        }
-        public static async Task<WebApplication> MigrateIdentityDatabaseAsync(this WebApplication app)
-        {
-            await using var scope = app.Services.CreateAsyncScope();
-
-            var dbContextService = scope.ServiceProvider.GetRequiredService<StoreIdentityDbContext>();
             var pendingMigrations = await dbContextService.Database.GetPendingMigrationsAsync();
             if (pendingMigrations.Any())
                 await dbContextService.Database.MigrateAsync();

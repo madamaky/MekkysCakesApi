@@ -1,15 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MekkysCakes.Persistence.IdentityData.Migrations
+namespace MekkysCakes.Persistence.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityTablesInitialCreate : Migration
+    public partial class MergeIdentityTablesAndAddProductReviewsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<decimal>(
+                name: "AverageRating",
+                table: "Products",
+                type: "decimal(3,2)",
+                precision: 3,
+                scale: 2,
+                nullable: false,
+                defaultValue: 0m);
+
+            migrationBuilder.AddColumn<int>(
+                name: "TotalReviews",
+                table: "Products",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
@@ -157,6 +174,38 @@ namespace MekkysCakes.Persistence.IdentityData.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductReviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductReviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductReviews_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductReviews_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRoles",
                 columns: table => new
                 {
@@ -199,6 +248,22 @@ namespace MekkysCakes.Persistence.IdentityData.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
                 table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReview_ProductDate",
+                table: "ProductReviews",
+                columns: new[] { "ProductId", "CreatedAt" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReview_UserProduct",
+                table: "ProductReviews",
+                columns: new[] { "ProductId", "UserId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReviews_UserId",
+                table: "ProductReviews",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -245,6 +310,9 @@ namespace MekkysCakes.Persistence.IdentityData.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ProductReviews");
+
+            migrationBuilder.DropTable(
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
@@ -252,6 +320,14 @@ namespace MekkysCakes.Persistence.IdentityData.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "AverageRating",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "TotalReviews",
+                table: "Products");
         }
     }
 }

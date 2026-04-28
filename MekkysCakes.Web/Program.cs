@@ -3,8 +3,6 @@ using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.IdentityModule;
 using MekkysCakes.Persistence.Data.DataSeed;
 using MekkysCakes.Persistence.Data.DbContexts;
-using MekkysCakes.Persistence.IdentityData.DataSeed;
-using MekkysCakes.Persistence.IdentityData.DbContexts;
 using MekkysCakes.Persistence.Repositories;
 using MekkysCakes.Services;
 using MekkysCakes.Services.Abstraction;
@@ -49,14 +47,10 @@ namespace MekkysCakes.Web
             {
                 return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
             });
-            builder.Services.AddDbContext<StoreIdentityDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
-            });
 
             builder.Services.AddIdentityCore<ApplicationUser>() // Add Options if needed
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+                .AddEntityFrameworkStores<StoreDbContext>();
 
             builder.Services
                 .AddAuthentication(options =>
@@ -105,7 +99,6 @@ namespace MekkysCakes.Web
             #region Data Seeding
 
             await app.MigrateDatabaseAsync();
-            await app.MigrateIdentityDatabaseAsync();
             await app.SeedDatabaseAsync();
             await app.SeedIdentityDatabaseAsync();
 

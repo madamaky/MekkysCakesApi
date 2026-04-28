@@ -27,6 +27,13 @@ namespace MekkysCakes.Persistence.Data.Configurations
             builder.HasOne(p => p.ProductType)
                 .WithMany()
                 .HasForeignKey(p => p.TypeId);
+
+            builder.Property(p => p.AverageRating)
+                .HasPrecision(3, 2)
+                .HasDefaultValue(0);
+
+            builder.Property(p => p.TotalReviews)
+                .HasDefaultValue(0);
         }
     }
 }
