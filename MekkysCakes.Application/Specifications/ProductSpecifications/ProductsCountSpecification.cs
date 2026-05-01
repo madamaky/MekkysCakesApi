@@ -1,5 +1,5 @@
 using MekkysCakes.Domain.Entities.ProductModule;
-using MekkysCakes.Shared.DTOs.ProductDTOs;
+using MekkysCakes.Application.Features.Products.Queries.GetAllProducts;
 
 namespace MekkysCakes.Application.Specifications.ProductSpecifications
 {

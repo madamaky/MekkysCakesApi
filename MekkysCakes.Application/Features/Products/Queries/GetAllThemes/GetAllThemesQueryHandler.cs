@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
-using MekkysCakes.Shared.DTOs.ProductDTOs;
+
 
 namespace MekkysCakes.Application.Features.Products.Queries.GetAllThemes
 {

@@ -62,7 +62,7 @@ namespace MekkysCakes.Presentation.Attributes
         private string Serialize(object value)
         {
             if (value is string || value.GetType().IsPrimitive || value is Enum)
-                return value.ToString();
+                return value.ToString()!;
 
             return JsonSerializer.Serialize(value);
         }

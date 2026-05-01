@@ -3,5 +3,5 @@ using MekkysCakes.Shared.CommonResult;
 
 namespace MekkysCakes.Application.Features.Wishlists.Commands.AddItemToWishlist
 {
-    public record AddItemToWishlistCommand(string UserEmail, int ProductId) : IRequest<Result<bool>>;
+    public record AddItemToWishlistCommand(int ProductId) : IRequest<Result<bool>>;
 }

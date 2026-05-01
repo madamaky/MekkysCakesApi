@@ -1,6 +1,6 @@
-﻿namespace MekkysCakes.Shared.DTOs.OrderDTOs
+namespace MekkysCakes.Shared.DTOs.OrderDTOs
 {
-    public class OrderItemDTO
+    public record OrderItemDTO
     {
         public string ProductName { get; init; } = default!;
         public string PictureUrl { get; init; } = default!;

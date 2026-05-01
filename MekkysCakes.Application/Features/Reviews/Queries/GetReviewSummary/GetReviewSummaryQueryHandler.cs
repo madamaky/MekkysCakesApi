@@ -1,10 +1,9 @@
-﻿using MediatR;
+using MediatR;
 using MekkysCakes.Application.Specifications.ReviewSpecifications;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Domain.Entities.ReviewModule;
 using MekkysCakes.Shared.CommonResult;
-using MekkysCakes.Shared.DTOs.ReviewDTOs;
 
 namespace MekkysCakes.Application.Features.Reviews.Queries.GetReviewSummary
 {
@@ -39,12 +38,7 @@ namespace MekkysCakes.Application.Features.Reviews.Queries.GetReviewSummary
                     distribution[review.Rating]++;
 
             // Build the summary DTO
-            return new ReviewSummaryDTO
-            {
-                AverageRating = product.AverageRating,
-                TotalReviews = product.TotalReviews,
-                RatingDistribution = distribution
-            };
+            return new ReviewSummaryDTO(product.AverageRating, product.TotalReviews, distribution);
         }
     }
 }

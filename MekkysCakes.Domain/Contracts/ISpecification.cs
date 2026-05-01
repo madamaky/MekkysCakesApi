@@ -10,8 +10,8 @@ namespace MekkysCakes.Domain.Contracts
 
         public List<Func<IQueryable<TEntity>, IQueryable<TEntity>>> ThenIncludeExpressions { get; }
 
-        public Expression<Func<TEntity, object>> OrderBy { get; }
-        public Expression<Func<TEntity, object>> OrderByDescending { get; }
+        public Expression<Func<TEntity, object>>? OrderBy { get; }
+        public Expression<Func<TEntity, object>>? OrderByDescending { get; }
         public int Take { get; }
         public int Skip { get; }
         public bool IsPaginated { get; }

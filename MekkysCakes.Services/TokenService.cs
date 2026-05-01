@@ -23,7 +23,8 @@ namespace MekkysCakes.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(JwtRegisteredClaimNames.Name, user.UserName!),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!),
+                new Claim(JwtRegisteredClaimNames.Name, user.DisplayName!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

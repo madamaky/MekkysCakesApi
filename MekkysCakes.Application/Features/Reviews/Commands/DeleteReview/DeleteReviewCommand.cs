@@ -3,9 +3,5 @@ using MekkysCakes.Shared.CommonResult;
 
 namespace MekkysCakes.Application.Features.Reviews.Commands.DeleteReview
 {
-    public record DeleteReviewCommand
-    (
-        int ReviewId,
-        string UserEmail
-    ) : IRequest<Result<bool>>;
+    public record DeleteReviewCommand(int ReviewId) : IRequest<Result<bool>>;
 }

@@ -23,10 +23,6 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
                 .MaximumLength(2000)
                 .When(x => x.Comment is not null)
                 .WithMessage("Review comment must not exceed 2000 characters");
-
-            RuleFor(x => x.UserEmail)
-                .NotEmpty()
-                .WithMessage("User email is required");
         }
     }
 }

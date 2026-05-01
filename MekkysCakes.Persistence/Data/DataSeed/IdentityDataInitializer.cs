@@ -1,4 +1,5 @@
-﻿using MekkysCakes.Domain.Contracts;
+using MekkysCakes.Domain;
+using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.IdentityModule;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -24,9 +25,9 @@ namespace MekkysCakes.Persistence.Data.DataSeed
             {
                 if (!_roleManager.Roles.Any())
                 {
-                    await _roleManager.CreateAsync(new IdentityRole("TopTierHuman"));
-                    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
-                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole(AppRoles.TopTierHuman));
+                    await _roleManager.CreateAsync(new IdentityRole(AppRoles.SuperAdmin));
+                    await _roleManager.CreateAsync(new IdentityRole(AppRoles.Admin));
                 }
 
                 if (!_userManager.Users.Any())
@@ -49,8 +50,8 @@ namespace MekkysCakes.Persistence.Data.DataSeed
                     await _userManager.CreateAsync(user01, "P@$$w0rd");
                     await _userManager.CreateAsync(user02, "P@$$w0rd");
 
-                    await _userManager.AddToRoleAsync(user01, "TopTierHuman");
-                    await _userManager.AddToRoleAsync(user02, "SuperAdmin");
+                    await _userManager.AddToRoleAsync(user01, AppRoles.TopTierHuman);
+                    await _userManager.AddToRoleAsync(user02, AppRoles.SuperAdmin);
                 }
             }
             catch (Exception ex)

@@ -4,16 +4,19 @@ using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Domain.Entities.WishlistModule;
 using MekkysCakes.Application.Specifications.WishlistSpecifications;
 using MekkysCakes.Shared.CommonResult;
+using MekkysCakes.Services.Abstraction;
 
 namespace MekkysCakes.Application.Features.Wishlists.Commands.AddItemToWishlist
 {
     public class AddItemToWishlistCommandHandler : IRequestHandler<AddItemToWishlistCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICurrentUserService _currentUserService;
 
-        public AddItemToWishlistCommandHandler(IUnitOfWork unitOfWork)
+        public AddItemToWishlistCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
         {
             _unitOfWork = unitOfWork;
+            _currentUserService = currentUserService;
         }
 
         public async Task<Result<bool>> Handle(AddItemToWishlistCommand request, CancellationToken cancellationToken)
@@ -22,13 +25,14 @@ namespace MekkysCakes.Application.Features.Wishlists.Commands.AddItemToWishlist
             if (productExists is null)
                 return Error.NotFound("Product.NotFound", $"Product With Id {request.ProductId} Was Not Found.");
 
-            var spec = new WishlistByEmailSpecification(request.UserEmail);
+            var email = _currentUserService.Email!;
+            var spec = new WishlistByEmailSpecification(email);
             var wishlist = await _unitOfWork.GetRepository<Wishlist, Guid>().GetByIdAsync(spec);
             if (wishlist is null)
             {
                 wishlist = new Wishlist
                 {
-                    UserEmail = request.UserEmail,
+                    UserEmail = email,
                     Items = new List<WishlistItem>
                     {
                         new WishlistItem { ProductId = request.ProductId }

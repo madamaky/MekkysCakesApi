@@ -12,19 +12,19 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
     public class UpdateReviewCommandHandler : IRequestHandler<UpdateReviewCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IIdentityService _identityService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public UpdateReviewCommandHandler(IUnitOfWork unitOfWork, IIdentityService identityService)
+        public UpdateReviewCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
         {
             _unitOfWork = unitOfWork;
-            _identityService = identityService;
+            _currentUserService = currentUserService;
         }
 
         public async Task<Result<bool>> Handle(UpdateReviewCommand request, CancellationToken cancellationToken)
         {
-            // Resolve the user from email
-            var user = await _identityService.FindByEmailAsync(request.UserEmail);
-            if (user is null)
+            // Get the current user
+            var userId = _currentUserService.UserId;
+            if (userId is null)
                 return Error.Unauthorized("User.Unauthorized", "The User Was Not Found");
 
             // Find the review
@@ -33,7 +33,7 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
                 return Error.NotFound("Review.NotFound", $"The Review With Id {request.ReviewId} Was Not Found");
 
             // Verify ownership
-            if (review.UserId != user.Id)
+            if (review.UserId != userId)
                 return Error.Forbidden("Review.Forbidden", "You Do Not Have Permission To Update This Review");
 
             // Store old rating before updating

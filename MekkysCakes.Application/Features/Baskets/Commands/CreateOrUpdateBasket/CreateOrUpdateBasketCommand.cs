@@ -4,8 +4,5 @@ using MekkysCakes.Shared.DTOs.BasketDTOs;
 
 namespace MekkysCakes.Application.Features.Baskets.Commands.CreateOrUpdateBasket
 {
-    public record CreateOrUpdateBasketCommand(
-        string Email,
-        ICollection<BasketItemDTO> Items
-    ) : IRequest<Result<BasketDTO>>;
+    public record CreateOrUpdateBasketCommand(ICollection<BasketItemDTO> Items) : IRequest<Result<BasketDTO>>;
 }

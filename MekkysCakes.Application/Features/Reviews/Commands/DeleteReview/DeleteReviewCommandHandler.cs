@@ -12,19 +12,19 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.DeleteReview
     public class DeleteReviewCommandHandler : IRequestHandler<DeleteReviewCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IIdentityService _identityService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public DeleteReviewCommandHandler(IUnitOfWork unitOfWork, IIdentityService identityService)
+        public DeleteReviewCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
         {
             _unitOfWork = unitOfWork;
-            _identityService = identityService;
+            _currentUserService = currentUserService;
         }
 
         public async Task<Result<bool>> Handle(DeleteReviewCommand request, CancellationToken cancellationToken)
         {
-            // Resolve user from email
-            var user = await _identityService.FindByEmailAsync(request.UserEmail);
-            if (user is null)
+            // Get the current user
+            var userId = _currentUserService.UserId;
+            if (userId is null)
                 return Error.Unauthorized("User.Unauthorized", "The User Was Not Found");
 
             // Find the review
@@ -33,7 +33,7 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.DeleteReview
                 return Error.NotFound("Review.NotFound", $"The Review With Id {request.ReviewId} Was Not Found");
 
             // Verify ownership
-            if (review.UserId != user.Id)
+            if (review.UserId != userId)
                 return Error.Forbidden("Review.Forbidden", "You Do Not Have Permission To Delete This Review");
 
             // Recalculate the product's average rating before deletion
@@ -52,7 +52,7 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.DeleteReview
                 }
                 _unitOfWork.GetRepository<Product, int>().Update(product);
             }
-
+            
             // Delete the review
             _unitOfWork.GetRepository<ProductReview, int>().Delete(review);
 

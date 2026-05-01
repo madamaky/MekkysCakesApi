@@ -4,5 +4,5 @@ using MekkysCakes.Shared.DTOs.IdentityDTOs;
 
 namespace MekkysCakes.Application.Features.Authentication.Queries.GetCurrentUser
 {
-    public record GetCurrentUserQuery(string Email) : IRequest<Result<UserDTO>>;
+    public record GetCurrentUserQuery() : IRequest<Result<UserDTO>>;
 }

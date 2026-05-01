@@ -19,10 +19,10 @@ namespace MekkysCakes.Application.Specifications
 
 
 
-        public Expression<Func<TEntity, object>> OrderBy { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
         protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExp) => OrderBy = orderByExp;
 
-        public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
         protected void AddOrderByDescending(Expression<Func<TEntity, object>> orderByDescExp) => OrderByDescending = orderByDescExp;
 
         public int Take { get; private set; }

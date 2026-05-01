@@ -1,6 +1,6 @@
-﻿namespace MekkysCakes.Shared.DTOs.OrderDTOs
+namespace MekkysCakes.Shared.DTOs.OrderDTOs
 {
-    public class OrderToReturnDTO
+    public record OrderToReturnDTO
     {
         public Guid Id { get; init; }
         public string UserEmail { get; init; } = default!;

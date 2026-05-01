@@ -1,5 +1,5 @@
 using MekkysCakes.Domain.Entities.OrderModule;
-using MekkysCakes.Shared.DTOs.OrderDTOs;
+using MekkysCakes.Application.Features.Orders.Queries.GetAllOrdersForAdmin;
 
 namespace MekkysCakes.Application.Specifications.OrderSpecifications
 {

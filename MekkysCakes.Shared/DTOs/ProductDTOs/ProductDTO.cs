@@ -1,6 +1,6 @@
-﻿namespace MekkysCakes.Shared.DTOs.ProductDTOs
+namespace MekkysCakes.Shared.DTOs.ProductDTOs
 {
-    public class ProductDTO
+    public record ProductDTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

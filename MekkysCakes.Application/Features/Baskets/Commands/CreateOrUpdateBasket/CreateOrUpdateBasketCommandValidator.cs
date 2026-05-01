@@ -6,9 +6,6 @@ namespace MekkysCakes.Application.Features.Baskets.Commands.CreateOrUpdateBasket
     {
         public CreateOrUpdateBasketCommandValidator()
         {
-            RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Email is required")
-                .EmailAddress().WithMessage("A valid email address is required");
             RuleFor(x => x.Items)
                 .NotNull().WithMessage("Items collection is required")
                 .Must(items => items != null && items.Count > 0).WithMessage("Basket must contain at least one item");

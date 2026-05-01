@@ -8,7 +8,6 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
         int ReviewId,
         int Rating,
         string? Title,
-        string? Comment,
-        string UserEmail
+        string? Comment
     ) : IRequest<Result<bool>>;
 }

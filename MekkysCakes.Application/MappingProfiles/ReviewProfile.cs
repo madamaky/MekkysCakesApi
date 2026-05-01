@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MekkysCakes.Domain.Entities.ReviewModule;
-using MekkysCakes.Shared.DTOs.ReviewDTOs;
+using MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews;
 
 namespace MekkysCakes.Application.MappingProfiles
 {

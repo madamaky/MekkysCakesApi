@@ -4,5 +4,5 @@ using MekkysCakes.Shared.DTOs.OrderDTOs;
 
 namespace MekkysCakes.Application.Features.Orders.Queries.GetOrderById
 {
-    public record GetOrderByIdQuery(string Email, Guid OrderId) : IRequest<Result<OrderToReturnDTO>>;
+    public record GetOrderByIdQuery(Guid OrderId) : IRequest<Result<OrderToReturnDTO>>;
 }

@@ -8,23 +8,23 @@ namespace MekkysCakes.Application.Features.Authentication.Queries.GetCurrentUser
     public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, Result<UserDTO>>
     {
         private readonly IIdentityService _identityService;
-        private readonly ITokenService _tokenService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public GetCurrentUserQueryHandler(IIdentityService identityService, ITokenService tokenService)
+        public GetCurrentUserQueryHandler(IIdentityService identityService, ICurrentUserService currentUserService)
         {
             _identityService = identityService;
-            _tokenService = tokenService;
+            _currentUserService = currentUserService;
         }
 
         public async Task<Result<UserDTO>> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
         {
-            var user = await _identityService.FindByEmailAsync(request.Email);
+            var email = _currentUserService.Email!;
+            var user = await _identityService.FindByEmailAsync(email);
             if (user is null)
-                return Error.NotFound("User.NotFound", $"User With Email {request.Email} Was Not Found");
+                return Error.NotFound("User.NotFound", $"User With Email {email} Was Not Found");
 
             var roles = await _identityService.GetRolesAsync(user);
-            var token = await _tokenService.GenerateTokenAsync(user, roles);
-            return new UserDTO(user.Email!, user.DisplayName, token);
+            return new UserDTO(user.Email!, user.DisplayName, _currentUserService.Token!);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using MediatR;
-using MekkysCakes.Shared.DTOs.ProductDTOs;
+using MediatR;
 
 namespace MekkysCakes.Application.Features.Products.Queries.GetAllThemes
 {
     public record GetAllThemesQuery() : IRequest<IEnumerable<ThemeDTO>>;
+
+    public record ThemeDTO(int Id, string Name);
 }

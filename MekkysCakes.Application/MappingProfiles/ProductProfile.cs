@@ -1,5 +1,7 @@
 using AutoMapper;
 using MekkysCakes.Application.Features.Products.Commands.CreateProduct;
+using MekkysCakes.Application.Features.Products.Queries.GetAllThemes;
+using MekkysCakes.Application.Features.Products.Queries.GetAllTypes;
 using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Shared.DTOs.ProductDTOs;
 

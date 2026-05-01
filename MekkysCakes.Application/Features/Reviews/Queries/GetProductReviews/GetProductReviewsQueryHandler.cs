@@ -1,10 +1,10 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using MekkysCakes.Application.Specifications.ReviewSpecifications;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ReviewModule;
 using MekkysCakes.Shared;
-using MekkysCakes.Shared.DTOs.ReviewDTOs;
+
 
 namespace MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews
 {

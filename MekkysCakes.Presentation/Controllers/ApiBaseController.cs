@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
+using MediatR;
 using MekkysCakes.Shared.CommonResult;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MekkysCakes.Presentation.Controllers
 {
@@ -10,6 +12,8 @@ namespace MekkysCakes.Presentation.Controllers
     [Route("api/[controller]")]
     public class ApiBaseController : ControllerBase
     {
+        protected ISender Sender => HttpContext.RequestServices.GetRequiredService<ISender>();
+
         protected IActionResult HandleResult(Result result)
         {
             if (result.IsSuccess)
@@ -73,7 +77,5 @@ namespace MekkysCakes.Presentation.Controllers
 
             return ValidationProblem(modelState);
         }
-
-        protected string GetEmailFromToken() => User.FindFirstValue(ClaimTypes.Email)!;
     }
 }

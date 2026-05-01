@@ -4,5 +4,5 @@ using MekkysCakes.Shared.DTOs.OrderDTOs;
 
 namespace MekkysCakes.Application.Features.Orders.Queries.GetAllOrders
 {
-    public record GetAllOrdersQuery(string Email) : IRequest<Result<IEnumerable<OrderToReturnDTO>>>;
+    public record GetAllOrdersQuery() : IRequest<Result<IEnumerable<OrderToReturnDTO>>>;
 }

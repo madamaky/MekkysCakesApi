@@ -5,12 +5,16 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.CreateReview
 {
     public record CreateReviewCommand
     (
-        int ProductId,
-        int Rating,      // 1-5
-        string? Title,
-        string? Comment,
-        string UserId    // Set by controller from JWT, not from request body
+        int ProductId, 
+        int Rating, 
+        string? Title, 
+        string? Comment
     ) : IRequest<Result<ReviewCreatedDTO>>;
 
-    public record ReviewCreatedDTO(int ReviewId, decimal NewAverageRating, int NewTotalReviews);
+    public record ReviewCreatedDTO
+    (
+        int ReviewId, 
+        decimal NewAverageRating, 
+        int NewTotalReviews
+    );
 }

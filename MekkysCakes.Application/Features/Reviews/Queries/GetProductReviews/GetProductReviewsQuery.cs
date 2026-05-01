@@ -1,6 +1,5 @@
-﻿using MediatR;
+using MediatR;
 using MekkysCakes.Shared;
-using MekkysCakes.Shared.DTOs.ReviewDTOs;
 
 namespace MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews
 {
@@ -11,4 +10,13 @@ namespace MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews
         int PageSize = 10,
         string Sort = "newest"  // "newest", "oldest", "highest", "lowest"
     ) : IRequest<PaginatedResult<ReviewDTO>>;
+
+    public record ReviewDTO(
+        int Id,
+        int Rating,
+        string? Title,
+        string? Comment,
+        string UserDisplayName,
+        DateTime CreatedAt,
+        DateTime? UpdatedAt);
 }

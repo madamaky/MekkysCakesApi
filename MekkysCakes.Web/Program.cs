@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using StackExchange.Redis;
 using MekkysCakes.Application;
+using MekkysCakes.Domain;
 
 namespace MekkysCakes.Web
 {
@@ -48,7 +49,9 @@ namespace MekkysCakes.Web
                 return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
             });
 
-            builder.Services.AddIdentityCore<ApplicationUser>() // Add Options if needed
+            builder.Services.AddIdentityCore<ApplicationUser>(options => 
+                    options.User.RequireUniqueEmail = true
+                )
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreDbContext>();
 
@@ -61,6 +64,7 @@ namespace MekkysCakes.Web
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
+                    options.MapInboundClaims = false;
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuer = true,
@@ -72,6 +76,10 @@ namespace MekkysCakes.Web
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTOptions:SecretKey"]!))
                     };
                 });
+
+            builder.Services.AddAuthorizationBuilder()
+                .AddPolicy(AuthorizationPolicies.AdminDashboard, policy =>
+                    policy.RequireRole(AppRoles.TopTierHuman, AppRoles.SuperAdmin, AppRoles.Admin));
 
             builder.Services.AddKeyedScoped<IDataInitializer, DataInitializer>("Default");
             builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
@@ -85,7 +93,10 @@ namespace MekkysCakes.Web
             builder.Services.AddScoped<ICacheService, CacheService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
-            
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
 
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {
