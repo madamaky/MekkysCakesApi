@@ -12,5 +12,6 @@ namespace MekkysCakes.Shared.DTOs.ProductDTOs
         public bool InStock { get; set; }
         public decimal AverageRating { get; set; }
         public int TotalReviews { get; set; }
+        public List<string> Badges { get; set; } = [];
     }
 }

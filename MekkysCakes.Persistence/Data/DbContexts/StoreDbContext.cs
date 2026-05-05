@@ -28,8 +28,11 @@ namespace MekkysCakes.Persistence.Data.DbContexts
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Badge> Badges { get; set; }
+        public DbSet<ProductBadge> ProductBadges { get; set; }
         public DbSet<ProductTheme> ProductThemes { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }

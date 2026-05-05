@@ -19,6 +19,8 @@
         public int TypeId { get; set; }
         public ProductType ProductType { get; set; } = default!;
 
+        public ICollection<ProductBadge> ProductBadges { get; set; } = [];
+
         #endregion
     }
 }

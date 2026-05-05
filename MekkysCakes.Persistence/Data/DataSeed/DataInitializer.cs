@@ -20,6 +20,7 @@ namespace MekkysCakes.Persistence.Data.DataSeed
         {
             await SeedDataFromJsonAsync<ProductType, int>(_dbContext.ProductTypes, "productTypes.json");
             await SeedDataFromJsonAsync<ProductTheme, int>(_dbContext.ProductThemes, "productThemes.json");
+            await SeedDataFromJsonAsync<Badge, int>(_dbContext.Badges, "badges.json");
             await _dbContext.SaveChangesAsync();
 
             await SeedDataFromJsonAsync<Product, int>(_dbContext.Products, "products.json");

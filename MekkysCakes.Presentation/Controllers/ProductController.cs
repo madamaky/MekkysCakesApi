@@ -1,3 +1,4 @@
+using MekkysCakes.Application.Features.Products.Queries.GetAllBadges;
 using MekkysCakes.Application.Features.Products.Queries.GetAllProducts;
 using MekkysCakes.Application.Features.Products.Queries.GetAllThemes;
 using MekkysCakes.Application.Features.Products.Queries.GetAllTypes;
@@ -50,6 +51,16 @@ namespace MekkysCakes.Presentation.Controllers
         {
             var productThemes = await Sender.Send(new GetAllThemesQuery());
             return Ok(productThemes);
+        }
+
+        /// <summary> Get all badges </summary>
+        /// <remarks> Retrieves a list of all available product badges. </remarks>
+        /// <response code="200">Returns a collection of product badges</response>
+        [HttpGet("badges")]
+        public async Task<ActionResult<IEnumerable<BadgeDTO>>> GetAllBadges()
+        {
+            var badges = await Sender.Send(new GetAllBadgesQuery());
+            return Ok(badges);
         }
     }
 }

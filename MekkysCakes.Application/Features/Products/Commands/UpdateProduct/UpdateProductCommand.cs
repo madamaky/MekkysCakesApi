@@ -10,6 +10,7 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
         string PictureUrl,
         decimal Price,
         int TypeId,
-        int ThemeId
+        int ThemeId,
+        List<int> BadgeIds
         ) : IRequest<Result<bool>>;
 }

@@ -1,5 +1,6 @@
-using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Application.Features.Products.Queries.GetAllProducts;
+using MekkysCakes.Domain.Entities.ProductModule;
+using Microsoft.EntityFrameworkCore;
 
 namespace MekkysCakes.Application.Specifications.ProductSpecifications
 {
@@ -9,6 +10,11 @@ namespace MekkysCakes.Application.Specifications.ProductSpecifications
         {
             AddInclude(p => p.ProductType);
             AddInclude(p => p.ProductTheme);
+
+            AddThenInclude(q => q
+                .Include(p => p.ProductBadges)
+                .ThenInclude(pb => pb.Badge)
+            );
         }
 
         public ProductWithTypeAndThemeSpecification(ProductQueryParams queryParams)
@@ -16,6 +22,11 @@ namespace MekkysCakes.Application.Specifications.ProductSpecifications
         {
             AddInclude(p => p.ProductType);
             AddInclude(p => p.ProductTheme);
+
+            AddThenInclude(q => q
+                .Include(p => p.ProductBadges)
+                .ThenInclude(pb => pb.Badge)
+            );
 
             switch (queryParams.Sort)
             {

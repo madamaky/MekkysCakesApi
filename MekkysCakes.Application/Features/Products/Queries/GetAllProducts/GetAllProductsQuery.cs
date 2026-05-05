@@ -16,6 +16,7 @@ namespace MekkysCakes.Application.Features.Products.Queries.GetAllProducts
     {
         public int? TypeId { get; set; }
         public int? ThemeId { get; set; }
+        public List<int>? BadgeIds { get; set; }
         public string? Search { get; set; }
         public ProductSortingOptions Sort { get; set; }
 

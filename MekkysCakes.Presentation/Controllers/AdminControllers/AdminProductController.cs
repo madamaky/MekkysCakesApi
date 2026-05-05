@@ -1,5 +1,8 @@
+using MekkysCakes.Application.Features.Products.Commands.CreateBadge;
 using MekkysCakes.Application.Features.Products.Commands.CreateProduct;
+using MekkysCakes.Application.Features.Products.Commands.DeleteBadge;
 using MekkysCakes.Application.Features.Products.Commands.DeleteProduct;
+using MekkysCakes.Application.Features.Products.Commands.UpdateBadge;
 using MekkysCakes.Application.Features.Products.Commands.UpdateProduct;
 using MekkysCakes.Application.Features.Products.Queries.GetAllProducts;
 using MekkysCakes.Domain;
@@ -54,6 +57,37 @@ namespace MekkysCakes.Presentation.Controllers.AdminControllers
         public async Task<ActionResult<bool>> DeleteProduct(int id)
         {
             var result = await Sender.Send(new DeleteProductCommand(id));
+            return HandleResult(result);
+        }
+
+        /// <summary> Create badge </summary>
+        /// <remarks> Creates a new product badge. </remarks>
+        /// <response code="200">Returns true if the badge was created</response>
+        [HttpPost("badges")]
+        public async Task<ActionResult<bool>> CreateBadge(CreateBadgeCommand command)
+        {
+            var result = await Sender.Send(command);
+            return HandleResult(result);
+        }
+
+        /// <summary> Update badge </summary>
+        /// <remarks> Updates an existing product badge. </remarks>
+        /// <response code="200">Returns true if the badge was updated</response>
+        [HttpPut("badges/{id}")]
+        public async Task<ActionResult<bool>> UpdateBadge([FromRoute] int id, [FromBody] UpdateBadgeCommand command)
+        {
+            var commandWithId = command with { Id = id };
+            var result = await Sender.Send(commandWithId);
+            return HandleResult(result);
+        }
+
+        /// <summary> Delete badge </summary>
+        /// <remarks> Deletes a product badge. </remarks>
+        /// <response code="200">Returns true if the badge was deleted</response>
+        [HttpDelete("badges/{id}")]
+        public async Task<ActionResult<bool>> DeleteBadge(int id)
+        {
+            var result = await Sender.Send(new DeleteBadgeCommand(id));
             return HandleResult(result);
         }
     }

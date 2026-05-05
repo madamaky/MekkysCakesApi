@@ -9,6 +9,8 @@ namespace MekkysCakes.Application.Specifications.ProductSpecifications
         public static Expression<Func<Product, bool>> GetProductCriteria(ProductQueryParams queryParams)
             => p => (!queryParams.TypeId.HasValue || p.TypeId == queryParams.TypeId.Value)
             && (!queryParams.ThemeId.HasValue || p.ThemeId == queryParams.ThemeId.Value)
-            && (string.IsNullOrEmpty(queryParams.Search) || p.Name.ToLower().Contains(queryParams.Search.ToLower()));
+            && (string.IsNullOrEmpty(queryParams.Search) || p.Name.ToLower().Contains(queryParams.Search.ToLower())
+            && (queryParams.BadgeIds == null || !queryParams.BadgeIds.Any() || p.ProductBadges.Any(pb => queryParams.BadgeIds.Contains(pb.BadgeId)))
+        );
     }
 }

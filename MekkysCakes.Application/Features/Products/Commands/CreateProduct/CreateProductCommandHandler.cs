@@ -25,7 +25,21 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
             if (theme is null)
                 return Error.NotFound("ProductTheme.NotFound", $"The Product Theme With Id {request.ThemeId} Was Not Found");
 
+            // Validate all badge ids exist
+            var badgeRepo = _unitOfWork.GetRepository<Badge, int>();
+            foreach (var badgeId in request.BadgeIds.Distinct())
+            {
+                var badge = await badgeRepo.GetByIdAsync(badgeId);
+                if (badge is null)
+                    return Error.NotFound("Badge.NotFound", $"The Badge With Id {badgeId} Was Not Found");
+            }
+
             var product = _mapper.Map<Product>(request);
+
+            // Add badge associations
+            product.ProductBadges = request.BadgeIds.Distinct()
+                .Select(id => new ProductBadge { BadgeId = id })
+                .ToList();
 
             await _unitOfWork.GetRepository<Product, int>().AddAsync(product);
             return await _unitOfWork.SaveChangesAsync();

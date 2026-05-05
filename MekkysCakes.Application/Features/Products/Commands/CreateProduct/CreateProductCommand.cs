@@ -9,6 +9,7 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
         string PictureUrl,
         decimal Price,
         int TypeId,
-        int ThemeId
+        int ThemeId,
+        List<int> BadgeIds
     ) : IRequest<Result<bool>>;
 }
