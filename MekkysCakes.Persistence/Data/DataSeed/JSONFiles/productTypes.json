@@ -1,14 +1,50 @@
 [
-  {
-    "Name": "Whole Cake"
-  },
-  {
-    "Name": "Cupcake"
-  },
-  {
-    "Name": "Cookie"
-  },
-  {
-    "Name": "Cake Pop"
-  }
+    {
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Whole Cake"
+            },
+            {
+                "Language": "ar",
+                "Name": "كيكة كاملة"
+            }
+        ]
+    },
+    {
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Cupcake"
+            },
+            {
+                "Language": "ar",
+                "Name": "كب كيك"
+            }
+        ]
+    },
+    {
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Cookie"
+            },
+            {
+                "Language": "ar",
+                "Name": "بسكويت"
+            }
+        ]
+    },
+    {
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Cake Pop"
+            },
+            {
+                "Language": "ar",
+                "Name": "كيك بوب"
+            }
+        ]
+    }
 ]

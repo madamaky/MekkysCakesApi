@@ -16,10 +16,10 @@ namespace MekkysCakes.Application.MappingProfiles
             CreateMap<ProductType, TypeDTO>();
             CreateMap<ProductTheme, ThemeDTO>();
             CreateMap<Product, ProductDTO>()
-                .ForMember(dest => dest.ProductType, opt => opt.MapFrom(src => src.ProductType.Name))
-                .ForMember(dest => dest.ProductTheme, opt => opt.MapFrom(src => src.ProductTheme.Name))
-                .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom<ProductPictureUrlResolver>())
-                .ForMember(dest => dest.Badges, opt => opt.MapFrom(src => src.ProductBadges.Select(pb => pb.Badge.Name).ToList()));
+                //.ForMember(dest => dest.ProductType, opt => opt.MapFrom(src => src.ProductType.Name))
+                //.ForMember(dest => dest.ProductTheme, opt => opt.MapFrom(src => src.ProductTheme.Name))
+                .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom<ProductPictureUrlResolver>());
+                //.ForMember(dest => dest.Badges, opt => opt.MapFrom(src => src.ProductBadges.Select(pb => pb.Badge.Name).ToList()));
             CreateMap<CreateProductCommand, Product>();
         }
     }

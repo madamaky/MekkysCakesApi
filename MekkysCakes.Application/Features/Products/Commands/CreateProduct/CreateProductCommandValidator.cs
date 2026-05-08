@@ -6,12 +6,12 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
     {
         public CreateProductCommandValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Product name is required")
-                .MaximumLength(200).WithMessage("Product name must not exceed 200 characters");
+            //RuleFor(x => x.Name)
+            //    .NotEmpty().WithMessage("Product name is required")
+            //    .MaximumLength(200).WithMessage("Product name must not exceed 200 characters");
 
-            RuleFor(x => x.Description)
-                .NotEmpty().WithMessage("Product description is required");
+            //RuleFor(x => x.Description)
+            //    .NotEmpty().WithMessage("Product description is required");
 
             RuleFor(x => x.PictureUrl)
                 .NotEmpty().WithMessage("Product picture URL is required");
@@ -30,6 +30,21 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
 
             RuleForEach(x => x.BadgeIds)
                 .GreaterThan(0).WithMessage("Each Badge Id must be a positive integer");
+
+            RuleFor(x => x.Translations)
+                .NotEmpty().WithMessage("At least one translation is required");
+
+            RuleForEach(x => x.Translations).ChildRules(t =>
+            {
+                t.RuleFor(x => x.Language).NotEmpty().Must(l => l == "en" || l == "ar");
+                t.RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
+                t.RuleFor(x => x.Description).NotEmpty().MaximumLength(500);
+            });
+
+            // Ensure English translation exists
+            RuleFor(x => x.Translations)
+                .Must(t => t.Any(tr => tr.Language == "en"))
+                .WithMessage("English translation is required");
         }
     }
 }

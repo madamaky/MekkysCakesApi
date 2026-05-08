@@ -1,11 +1,9 @@
 ﻿using MediatR;
 using MekkysCakes.Domain.Contracts;
-using MekkysCakes.Domain.Entities.IdentityModule;
 using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Domain.Entities.ReviewModule;
 using MekkysCakes.Services.Abstraction;
 using MekkysCakes.Shared.CommonResult;
-using Microsoft.AspNetCore.Identity;
 
 namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
 {
@@ -44,7 +42,7 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
             review.Title = request.Title;
             review.Comment = request.Comment;
             review.UpdatedAt = DateTime.UtcNow;
-            review.IsApproved = false; // Reset approval
+            //review.IsApproved = false; // Reset approval
 
             _unitOfWork.GetRepository<ProductReview, int>().Update(review);
 

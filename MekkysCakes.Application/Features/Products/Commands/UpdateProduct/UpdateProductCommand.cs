@@ -5,12 +5,13 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
 {
     public record UpdateProductCommand(
         int Id,
-        string Name,
-        string Description,
+        //string Name,
+        //string Description,
         string PictureUrl,
         decimal Price,
         int TypeId,
         int ThemeId,
-        List<int> BadgeIds
+        List<int> BadgeIds,
+        List<ProductTranslationInput> Translations
         ) : IRequest<Result<bool>>;
 }

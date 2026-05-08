@@ -40,12 +40,21 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
                     return Error.NotFound("Badge.NotFound", $"The Badge With Id {badgeId} Was Not Found");
             }
 
-            product.Name = request.Name;
-            product.Description = request.Description;
+            //product.Name = request.Name;
+            //product.Description = request.Description;
             product.PictureUrl = request.PictureUrl;
             product.Price = request.Price;
             product.ThemeId = request.ThemeId;
             product.TypeId = request.TypeId;
+
+            product.Translations = request.Translations
+                .Select(t => new ProductTranslation
+                {
+                    Language = t.Language,
+                    Name = t.Name,
+                    Description = t.Description,
+                    //ProductId = product.Id
+                }).ToList();
 
             // Clear old badges and set new ones
             product.ProductBadges.Clear();

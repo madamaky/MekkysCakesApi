@@ -1,9 +1,9 @@
 ﻿namespace MekkysCakes.Domain.Entities.ProductModule
 {
-    public class Product : BaseEntity<int>
+    public class Product : BaseEntity<int>, ITranslatableEntity<ProductTranslation>
     {
-        public string Name { get; set; } = default!;
-        public string Description { get; set; } = default!;
+        //public string Name { get; set; } = default!;
+        //public string Description { get; set; } = default!;
         public string PictureUrl { get; set; } = default!;
         public decimal Price { get; set; }
         public bool InStock { get; set; } = true;
@@ -20,6 +20,8 @@
         public ProductType ProductType { get; set; } = default!;
 
         public ICollection<ProductBadge> ProductBadges { get; set; } = [];
+
+        public ICollection<ProductTranslation> Translations { get; set; } = [];
 
         #endregion
     }

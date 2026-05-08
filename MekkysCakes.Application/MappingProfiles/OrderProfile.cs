@@ -11,7 +11,7 @@ namespace MekkysCakes.Application.MappingProfiles
         {
             CreateMap<AddressDTO, OrderAddress>().ReverseMap();
             CreateMap<Order, OrderToReturnDTO>()
-                .ForMember(dest => dest.DeliveryMethod, opt => opt.MapFrom(src => src.DeliveryMethod.ShortName))
+                //.ForMember(dest => dest.DeliveryMethod, opt => opt.MapFrom(src => src.DeliveryMethod.ShortName))
                 .ForMember(dest => dest.OrdersStatus, opt => opt.MapFrom(src => src.OrderStatus.ToString()));
             CreateMap<OrderItem, OrderItemDTO>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))

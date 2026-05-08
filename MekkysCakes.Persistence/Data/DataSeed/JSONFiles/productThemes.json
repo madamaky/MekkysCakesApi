@@ -1,14 +1,26 @@
 [
-  {
-    "Name": "Classic"
-  },
-  {
-    "Name": "Birthday"
-  },
-  {
-    "Name": "Wedding"
-  },
-  {
-    "Name": "Seasonal"
-  }
+    {
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Classic"
+            },
+            {
+                "Language": "ar",
+                "Name": "كلاسيكي"
+            }
+        ]
+    },
+    {
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Birthday"
+            },
+            {
+                "Language": "ar",
+                "Name": "عيد ميلاد"
+            }
+        ]
+    }
 ]

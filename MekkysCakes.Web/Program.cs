@@ -97,6 +97,7 @@ namespace MekkysCakes.Web
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
+            builder.Services.AddScoped<ILanguageContext, LanguageContext>();
 
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {

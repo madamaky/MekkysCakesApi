@@ -36,6 +36,14 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
 
             var product = _mapper.Map<Product>(request);
 
+            product.Translations = request.Translations
+                .Select(t => new ProductTranslation
+                {
+                    Language = t.Language,
+                    Name = t.Name,
+                    Description = t.Description
+                }).ToList();
+
             // Add badge associations
             product.ProductBadges = request.BadgeIds.Distinct()
                 .Select(id => new ProductBadge { BadgeId = id })

@@ -93,7 +93,7 @@ namespace MekkysCakes.Application.Features.Orders.Commands.CreateOrder
                 Product = new ProductItemOrdered
                 {
                     ProductId = product.Id,
-                    ProductName = product.Name,
+                    ProductName = product.Translations.FirstOrDefault()?.Name ?? "",
                     PictureUrl = product.PictureUrl
                 },
                 Price = product.Price,

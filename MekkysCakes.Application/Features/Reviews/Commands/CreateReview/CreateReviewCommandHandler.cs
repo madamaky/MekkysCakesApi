@@ -46,7 +46,7 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.CreateReview
                 Title = request.Title,
                 Comment = request.Comment,
                 CreatedAt = DateTime.UtcNow,
-                IsApproved = false
+                IsApproved = true
             };
             await _unitOfWork.GetRepository<ProductReview, int>().AddAsync(review);
 

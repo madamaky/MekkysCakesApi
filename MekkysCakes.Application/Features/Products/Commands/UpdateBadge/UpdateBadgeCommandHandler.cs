@@ -20,7 +20,16 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateBadge
             if (badge is null)
                 return Error.NotFound("Badge.NotFound", $"The Badge With Id {request.Id} Was Not Found");
 
-            badge.Name = request.Name;
+            //badge.Name = request.Name;
+
+            badge.Translations = request.Translations
+                .Select(t => new BadgeTranslation
+                {
+                    Language = t.Language,
+                    Name = t.Name,
+                    //BadgeId = badge.Id
+                }).ToList();
+
             _unitOfWork.GetRepository<Badge, int>().Update(badge);
             return await _unitOfWork.SaveChangesAsync();
         }

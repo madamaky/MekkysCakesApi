@@ -1,26 +1,98 @@
 [
     {
-        "Name": "Vanilla"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Vanilla"
+            },
+            {
+                "Language": "ar",
+                "Name": "فانيليا"
+            }
+        ]
     },
     {
-        "Name": "Chocolate"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Chocolate"
+            },
+            {
+                "Language": "ar",
+                "Name": "شوكولاتة"
+            }
+        ]
     },
     {
-        "Name": "Strawberry"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Strawberry"
+            },
+            {
+                "Language": "ar",
+                "Name": "فراولة"
+            }
+        ]
     },
     {
-        "Name": "Red Velvet"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Red Velvet"
+            },
+            {
+                "Language": "ar",
+                "Name": "ريد فيلفيت"
+            }
+        ]
     },
     {
-        "Name": "Caramel"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Caramel"
+            },
+            {
+                "Language": "ar",
+                "Name": "كراميل"
+            }
+        ]
     },
     {
-        "Name": "Sugar Free"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Sugar Free"
+            },
+            {
+                "Language": "ar",
+                "Name": "خالي من السكر"
+            }
+        ]
     },
     {
-        "Name": "Gluten Free"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Gluten Free"
+            },
+            {
+                "Language": "ar",
+                "Name": "خالي من الغلوتين"
+            }
+        ]
     },
     {
-        "Name": "Vegan"
+        "Translations": [
+            {
+                "Language": "en",
+                "Name": "Vegan"
+            },
+            {
+                "Language": "ar",
+                "Name": "نباتي"
+            }
+        ]
     }
 ]

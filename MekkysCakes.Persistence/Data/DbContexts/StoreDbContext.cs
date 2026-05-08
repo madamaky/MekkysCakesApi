@@ -36,5 +36,12 @@ namespace MekkysCakes.Persistence.Data.DbContexts
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
+
+        public DbSet<ProductTranslation> ProductTranslations { get; set; }
+        public DbSet<BadgeTranslation> BadgeTranslations { get; set; }
+        public DbSet<ProductThemeTranslation> ProductThemeTranslations { get; set; }
+        public DbSet<ProductTypeTranslation> ProductTypeTranslations { get; set; }
+        public DbSet<DeliveryMethodTranslation> DeliveryMethodTranslations { get; set; }
+
     }
 }
