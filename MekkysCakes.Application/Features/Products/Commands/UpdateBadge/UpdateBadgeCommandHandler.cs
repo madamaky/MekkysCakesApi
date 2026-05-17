@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Shared.CommonResult;
@@ -20,15 +20,11 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateBadge
             if (badge is null)
                 return Error.NotFound("Badge.NotFound", $"The Badge With Id {request.Id} Was Not Found");
 
-            //badge.Name = request.Name;
-
-            badge.Translations = request.Translations
-                .Select(t => new BadgeTranslation
-                {
-                    Language = t.Language,
-                    Name = t.Name,
-                    //BadgeId = badge.Id
-                }).ToList();
+            badge.Translations =
+            [
+                new() { Language = "en", Name = request.Name.En },
+                new() { Language = "ar", Name = request.Name.Ar }
+            ];
 
             _unitOfWork.GetRepository<Badge, int>().Update(badge);
             return await _unitOfWork.SaveChangesAsync();

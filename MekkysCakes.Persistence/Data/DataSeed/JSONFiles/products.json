@@ -38,8 +38,8 @@
     {
         "PictureUrl": "images/products/wedding-rose.jpg",
         "Price": 150.00,
-        "TypeId": 1,
-        "ThemeId": 3,
+        "TypeId": 3,
+        "ThemeId": 1,
         "Translations": [
             {
                 "Language": "en",
@@ -74,7 +74,7 @@
     {
         "PictureUrl": "images/products/cupcake-unicorn.jpg",
         "Price": 5.50,
-        "TypeId": 2,
+        "TypeId": 4,
         "ThemeId": 2,
         "Translations": [
             {
@@ -93,7 +93,7 @@
         "PictureUrl": "images/products/cookie-ginger.jpg",
         "Price": 12.00,
         "TypeId": 3,
-        "ThemeId": 4,
+        "ThemeId": 1,
         "Translations": [
             {
                 "Language": "en",
@@ -129,7 +129,7 @@
         "PictureUrl": "images/products/pop-champagne.jpg",
         "Price": 3.00,
         "TypeId": 4,
-        "ThemeId": 3,
+        "ThemeId": 1,
         "Translations": [
             {
                 "Language": "en",

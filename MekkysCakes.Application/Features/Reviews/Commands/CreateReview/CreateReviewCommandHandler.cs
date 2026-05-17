@@ -51,8 +51,7 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.CreateReview
             await _unitOfWork.GetRepository<ProductReview, int>().AddAsync(review);
 
             // Recalculate product rating aggregates (denormalization for performance)
-            product.TotalReviews += 1;
-            product.AverageRating = ((product.AverageRating * (product.TotalReviews - 1)) + request.Rating) / product.TotalReviews;
+            product.IncludeReviewInRatings(review.Rating);
             _unitOfWork.GetRepository<Product, int>().Update(product);
 
             await _unitOfWork.SaveChangesAsync();

@@ -1,11 +1,8 @@
-﻿using MediatR;
+using MediatR;
 using MekkysCakes.Shared.CommonResult;
+using MekkysCakes.Shared.DTOs;
 
 namespace MekkysCakes.Application.Features.Products.Commands.CreateBadge
 {
-    public record CreateBadgeCommand
-    (
-        //string Name,
-        List<NameTranslationInput> Translations
-    ) : IRequest<Result<bool>>;
+    public record CreateBadgeCommand(LocalizedString Name) : IRequest<Result<bool>>;
 }

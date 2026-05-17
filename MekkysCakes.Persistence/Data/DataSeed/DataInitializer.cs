@@ -31,9 +31,13 @@ namespace MekkysCakes.Persistence.Data.DataSeed
         {
             if (await dbSet.AnyAsync()) return;
 
-            var filePath = @"..\MekkysCakes.Persistence\Data\DataSeed\JSONFiles\" + fileName;
+            //var filePath = @"..\MekkysCakes.Persistence\Data\DataSeed\JSONFiles\" + fileName;
+            //if (!File.Exists(filePath))
+            //    throw new FileNotFoundException("Couldn't find the file at the provided path");
+
+            var filePath = Path.Combine(AppContext.BaseDirectory, "JSONFiles", fileName);
             if (!File.Exists(filePath))
-                throw new FileNotFoundException("Couldn't find the file at the provided path");
+                throw new FileNotFoundException($"File not found. Looked at: {filePath} | BaseDir: {AppContext.BaseDirectory}");
 
             using var fileStream = File.OpenRead(filePath);
             var data = await JsonSerializer.DeserializeAsync<List<TEntity>>(fileStream);

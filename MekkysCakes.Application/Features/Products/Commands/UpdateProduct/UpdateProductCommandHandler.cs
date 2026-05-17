@@ -1,4 +1,5 @@
-﻿using MediatR;
+using AutoMapper;
+using MediatR;
 using MekkysCakes.Application.Specifications.ProductSpecifications;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
@@ -9,15 +10,17 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public UpdateProductCommandHandler(IUnitOfWork unitOfWork)
+        public UpdateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<Result<bool>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var spec = new ProductWithBadgesSpecification(request.Id);
+            var spec = new ProductWithTypeAndThemeSpecification(request.Id);
 
             var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(spec);
             if (product is null)
@@ -40,26 +43,19 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
                     return Error.NotFound("Badge.NotFound", $"The Badge With Id {badgeId} Was Not Found");
             }
 
-            //product.Name = request.Name;
-            //product.Description = request.Description;
             product.PictureUrl = request.PictureUrl;
             product.Price = request.Price;
             product.ThemeId = request.ThemeId;
             product.TypeId = request.TypeId;
 
-            product.Translations = request.Translations
-                .Select(t => new ProductTranslation
-                {
-                    Language = t.Language,
-                    Name = t.Name,
-                    Description = t.Description,
-                    //ProductId = product.Id
-                }).ToList();
+            product.Translations =
+            [
+                new() { Language = "en", Name = request.Name.En, Description = request.Description.En },
+                new() { Language = "ar", Name = request.Name.Ar, Description = request.Description.Ar }
+            ];
 
-            // Clear old badges and set new ones
-            product.ProductBadges.Clear();
             product.ProductBadges = request.BadgeIds.Distinct()
-                .Select(id => new ProductBadge { BadgeId = id, ProductId = product.Id }) // Can remove ", ProductId = product.Id"
+                .Select(id => new ProductBadge { BadgeId = id, ProductId = product.Id })
                 .ToList();
 
             _unitOfWork.GetRepository<Product, int>().Update(product);

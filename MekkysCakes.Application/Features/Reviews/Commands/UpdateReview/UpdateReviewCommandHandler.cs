@@ -45,14 +45,15 @@ namespace MekkysCakes.Application.Features.Reviews.Commands.UpdateReview
             //review.IsApproved = false; // Reset approval
 
             _unitOfWork.GetRepository<ProductReview, int>().Update(review);
+            
+            // Check if product exists
+            var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(review.ProductId);
+            if (product is null)
+                return Error.NotFound("Product.NotFound", $"The Product With Id {review.ProductId} Was Not Found");
 
             // Recalculate product's average rating
-            var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(review.ProductId);
-            if (product is not null && product.TotalReviews > 0)
-            {
-                product.AverageRating = ((product.AverageRating * product.TotalReviews) - oldRating + request.Rating) / product.TotalReviews;
-                _unitOfWork.GetRepository<Product, int>().Update(product);
-            }
+            product.UpdateReviewRating(oldRating, request.Rating);
+            _unitOfWork.GetRepository<Product, int>().Update(product);
 
             return await _unitOfWork.SaveChangesAsync();
         }

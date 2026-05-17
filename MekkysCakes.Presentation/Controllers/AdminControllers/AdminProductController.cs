@@ -43,8 +43,6 @@ namespace MekkysCakes.Presentation.Controllers.AdminControllers
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> UpdateProduct([FromRoute] int id, [FromBody] UpdateProductCommand command)
         {
-            // We need to ensure the route id matches the command id
-            // Create a new command with the route id (records are immutable, so we use "with")
             var commandWithId = command with { Id = id };
             var result = await Sender.Send(commandWithId);
             return HandleResult(result);

@@ -9,7 +9,7 @@ namespace MekkysCakes.Persistence.Data.Configurations
         public void Configure(EntityTypeBuilder<ProductTranslation> builder)
         {
             builder.Property(t => t.Language).IsRequired().HasMaxLength(5);
-            builder.Property(t => t.Name).IsRequired().HasMaxLength(100);
+             builder.Property(t => t.Name).IsRequired().HasMaxLength(100);
             builder.Property(t => t.Description).IsRequired().HasMaxLength(500);
 
             // One product can have one translation per language

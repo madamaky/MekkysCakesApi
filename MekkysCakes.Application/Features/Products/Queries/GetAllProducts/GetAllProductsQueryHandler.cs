@@ -1,8 +1,8 @@
 using AutoMapper;
 using MediatR;
+using MekkysCakes.Application.Specifications.ProductSpecifications;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
-using MekkysCakes.Application.Specifications.ProductSpecifications;
 using MekkysCakes.Shared;
 using MekkysCakes.Shared.DTOs.ProductDTOs;
 
@@ -18,13 +18,15 @@ namespace MekkysCakes.Application.Features.Products.Queries.GetAllProducts
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        
         public async Task<PaginatedResult<ProductDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var repo = _unitOfWork.GetRepository<Product, int>();
-            var specification = new ProductWithTypeAndThemeSpecification(request.QueryParams);
-            var products = await repo.GetAllAsync(specification);
+            var spec = new ProductWithTypeAndThemeSpecification(request.QueryParams);
+            var products = await repo.GetAllAsync(spec);
+
             var dataToReturn = _mapper.Map<IEnumerable<ProductDTO>>(products);
+
             var countOfAllProducts = await repo.CountAsync(new ProductsCountSpecification(request.QueryParams));
             return new PaginatedResult<ProductDTO>
             (

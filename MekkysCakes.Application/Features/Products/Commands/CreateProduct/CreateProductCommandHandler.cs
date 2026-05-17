@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
@@ -25,7 +25,6 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
             if (theme is null)
                 return Error.NotFound("ProductTheme.NotFound", $"The Product Theme With Id {request.ThemeId} Was Not Found");
 
-            // Validate all badge ids exist
             var badgeRepo = _unitOfWork.GetRepository<Badge, int>();
             foreach (var badgeId in request.BadgeIds.Distinct())
             {
@@ -36,18 +35,13 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateProduct
 
             var product = _mapper.Map<Product>(request);
 
-            product.Translations = request.Translations
-                .Select(t => new ProductTranslation
-                {
-                    Language = t.Language,
-                    Name = t.Name,
-                    Description = t.Description
-                }).ToList();
+            product.Translations =
+            [
+                new() { Language = "en", Name = request.Name.En, Description = request.Description.En },
+                new() { Language = "ar", Name = request.Name.Ar, Description = request.Description.Ar }
+            ];
 
-            // Add badge associations
-            product.ProductBadges = request.BadgeIds.Distinct()
-                .Select(id => new ProductBadge { BadgeId = id })
-                .ToList();
+            product.ProductBadges = request.BadgeIds.Distinct().Select(id => new ProductBadge { BadgeId = id }).ToList();
 
             await _unitOfWork.GetRepository<Product, int>().AddAsync(product);
             return await _unitOfWork.SaveChangesAsync();

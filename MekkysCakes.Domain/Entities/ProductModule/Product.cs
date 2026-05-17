@@ -11,6 +11,7 @@
         public decimal AverageRating { get; set; } = 0;
         public int TotalReviews { get; set; } = 0;
 
+
         #region Relationships
 
         public int ThemeId { get; set; }
@@ -22,6 +23,39 @@
         public ICollection<ProductBadge> ProductBadges { get; set; } = [];
 
         public ICollection<ProductTranslation> Translations { get; set; } = [];
+
+        #endregion
+
+
+        #region Helper Methods
+
+        public void IncludeReviewInRatings(int rating)
+        {
+            TotalReviews += 1;
+            AverageRating = ((AverageRating * (TotalReviews - 1)) + rating) / TotalReviews;
+        }
+
+        public void ExcludeReviewFromRatings(int rating)
+        {
+            if (TotalReviews <= 0) return;
+
+            if (TotalReviews == 1)
+            {
+                AverageRating = 0;
+                TotalReviews = 0;
+            }
+            else
+            {
+                AverageRating = (AverageRating * TotalReviews - rating) / (TotalReviews - 1);
+                TotalReviews -= 1;
+            }
+        }
+
+        public void UpdateReviewRating(int oldRating, int newRating)
+        {
+            if (TotalReviews <= 0) return;
+            AverageRating = (AverageRating * TotalReviews - oldRating + newRating) / TotalReviews;
+        }
 
         #endregion
     }

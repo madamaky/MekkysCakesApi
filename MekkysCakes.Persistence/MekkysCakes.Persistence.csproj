@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -14,5 +14,12 @@
   <ItemGroup>
     <ProjectReference Include="..\MekkysCakes.Domain\MekkysCakes.Domain.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Content Include="..\MekkysCakes.Persistence\Data\DataSeed\JSONFiles\*.json"
+				 Link="JSONFiles\%(Filename)%(Extension)">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

@@ -3,7 +3,6 @@ using MekkysCakes.Application.Features.Products.Queries.GetAllProducts;
 using MekkysCakes.Application.Features.Products.Queries.GetAllThemes;
 using MekkysCakes.Application.Features.Products.Queries.GetAllTypes;
 using MekkysCakes.Application.Features.Products.Queries.GetProductById;
-using MekkysCakes.Presentation.Attributes;
 using MekkysCakes.Shared;
 using MekkysCakes.Shared.DTOs.ProductDTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +24,7 @@ namespace MekkysCakes.Presentation.Controllers
         /// <summary> Get all products </summary>
         /// <remarks> Retrieves a paginated list of active products based on optional filters. </remarks>
         /// <response code="200">Returns a paginated result containing matching products</response>
-        [RedisCache]
+        //[RedisCache]
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)
         {

@@ -38,7 +38,7 @@ namespace MekkysCakes.Services
                 issuer: _configuration["JWTOptions:Issuer"],
                 audience: _configuration["JWTOptions:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(50),
+                expires: DateTime.UtcNow.AddHours(24),
                 signingCredentials: cred
             );
 

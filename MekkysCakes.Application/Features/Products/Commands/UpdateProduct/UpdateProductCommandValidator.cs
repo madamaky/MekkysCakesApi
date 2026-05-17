@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 
 namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
 {
@@ -9,12 +9,13 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
             RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Product Id must be a positive integer");
 
-            //RuleFor(x => x.Name)
-            //    .NotEmpty().WithMessage("Product name is required")
-            //    .MaximumLength(200).WithMessage("Product name must not exceed 200 characters");
+            RuleFor(x => x.Name).NotNull().WithMessage("Product name is required");
+            RuleFor(x => x.Name.En).NotEmpty().MaximumLength(100).WithMessage("English product name is required");
+            RuleFor(x => x.Name.Ar).NotEmpty().MaximumLength(100).WithMessage("Arabic product name is required");
 
-            //RuleFor(x => x.Description)
-            //    .NotEmpty().WithMessage("Product description is required");
+            RuleFor(x => x.Description).NotNull().WithMessage("Product description is required");
+            RuleFor(x => x.Description.En).NotEmpty().MaximumLength(500).WithMessage("English product description is required");
+            RuleFor(x => x.Description.Ar).NotEmpty().MaximumLength(500).WithMessage("Arabic product description is required");
 
             RuleFor(x => x.PictureUrl)
                 .NotEmpty().WithMessage("Product picture URL is required");
@@ -33,21 +34,6 @@ namespace MekkysCakes.Application.Features.Products.Commands.UpdateProduct
 
             RuleForEach(x => x.BadgeIds)
                 .GreaterThan(0).WithMessage("Each Badge Id must be a positive integer");
-
-            RuleFor(x => x.Translations)
-                .NotEmpty().WithMessage("At least one translation is required");
-
-            RuleForEach(x => x.Translations).ChildRules(t =>
-            {
-                t.RuleFor(x => x.Language).NotEmpty().Must(l => l == "en" || l == "ar");
-                t.RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
-                t.RuleFor(x => x.Description).NotEmpty().MaximumLength(500);
-            });
-
-            // Ensure English translation exists
-            RuleFor(x => x.Translations)
-                .Must(t => t.Any(tr => tr.Language == "en"))
-                .WithMessage("English translation is required");
         }
     }
 }

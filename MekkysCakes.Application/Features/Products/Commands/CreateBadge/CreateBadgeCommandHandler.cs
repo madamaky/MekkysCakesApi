@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ProductModule;
 using MekkysCakes.Shared.CommonResult;
@@ -16,16 +16,13 @@ namespace MekkysCakes.Application.Features.Products.Commands.CreateBadge
 
         public async Task<Result<bool>> Handle(CreateBadgeCommand request, CancellationToken cancellationToken)
         {
-            //var badge = new Badge { Name = request.Name };
-
             var badge = new Badge
             {
-                Translations = request.Translations
-                    .Select(t => new BadgeTranslation
-                    {
-                        Language = t.Language,
-                        Name = t.Name
-                    }).ToList()
+                Translations =
+                [
+                    new() { Language = "en", Name = request.Name.En },
+                    new() { Language = "ar", Name = request.Name.Ar }
+                ]
             };
 
             await _unitOfWork.GetRepository<Badge, int>().AddAsync(badge);
