@@ -8,14 +8,6 @@ namespace MekkysCakes.Application.Specifications.ProductSpecifications
     {
         public ProductWithTypeAndThemeSpecification(int id) : base(p => p.Id == id)
         {
-            //AddInclude(p => p.ProductType);
-            //AddInclude(p => p.ProductTheme);
-
-            //AddThenInclude(q => q
-            //    .Include(p => p.ProductBadges)
-            //    .ThenInclude(pb => pb.Badge)
-            //);
-
             AddInclude(p => p.Translations);
 
             AddThenInclude(q => q
@@ -38,14 +30,6 @@ namespace MekkysCakes.Application.Specifications.ProductSpecifications
         public ProductWithTypeAndThemeSpecification(ProductQueryParams queryParams)
             : base(ProductSpecificationHelper.GetProductCriteria(queryParams))
         {
-            //AddInclude(p => p.ProductType);
-            //AddInclude(p => p.ProductTheme);
-
-            //AddThenInclude(q => q
-            //    .Include(p => p.ProductBadges)
-            //    .ThenInclude(pb => pb.Badge)
-            //);
-
             AddInclude(p => p.Translations);
 
             AddThenInclude(q => q

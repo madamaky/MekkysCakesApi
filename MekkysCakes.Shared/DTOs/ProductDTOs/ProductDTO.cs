@@ -1,5 +1,3 @@
-using MekkysCakes.Shared.DTOs;
-
 namespace MekkysCakes.Shared.DTOs.ProductDTOs
 {
     public record ProductDTO

@@ -4,7 +4,7 @@ using MekkysCakes.Application.Features.Reviews.Commands.UpdateReview;
 using MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews;
 using MekkysCakes.Application.Features.Reviews.Queries.GetReviewSummary;
 using MekkysCakes.Shared;
-
+using MekkysCakes.Shared.DTOs.ReviewDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +16,7 @@ namespace MekkysCakes.Presentation.Controllers
         /// <remarks> Get paginated reviews for a specific product. Only returns approved reviews for public view. </remarks>
         /// <response code="200">Returns paginated reviews</response>
         [HttpGet("product/{productId}")]
-        public async Task<ActionResult<PaginatedResult<ReviewDTO>>> GetProductReviews(int productId, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10, [FromQuery] string sort = "newest")
+        public async Task<ActionResult<PaginatedResult<ProductReviewDTO>>> GetProductReviews(int productId, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10, [FromQuery] string sort = "newest")
         {
             var result = await Sender.Send(
                 new GetProductReviewsQuery(productId, pageIndex, pageSize, sort));

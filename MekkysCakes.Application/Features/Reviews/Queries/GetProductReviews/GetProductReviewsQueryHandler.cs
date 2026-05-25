@@ -4,11 +4,12 @@ using MekkysCakes.Application.Specifications.ReviewSpecifications;
 using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities.ReviewModule;
 using MekkysCakes.Shared;
+using MekkysCakes.Shared.DTOs.ReviewDTOs;
 
 
 namespace MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews
 {
-    public class GetProductReviewsQueryHandler : IRequestHandler<GetProductReviewsQuery, PaginatedResult<ReviewDTO>>
+    public class GetProductReviewsQueryHandler : IRequestHandler<GetProductReviewsQuery, PaginatedResult<ProductReviewDTO>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -19,11 +20,11 @@ namespace MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews
             _mapper = mapper;
         }
 
-        public async Task<PaginatedResult<ReviewDTO>> Handle(GetProductReviewsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<ProductReviewDTO>> Handle(GetProductReviewsQuery request, CancellationToken cancellationToken)
         {
             var repo = _unitOfWork.GetRepository<ProductReview, int>();
 
-            // Fetch the paginated, sorted, apporved reviews (with user included)
+            // Fetch the paginated, sorted, approved reviews (with user included)
             var spec = new ProductReviewSpecification(request.ProductId, request.Sort, request.PageSize, request.PageIndex);
             var reviews = await repo.GetAllAsync(spec);
 
@@ -32,10 +33,10 @@ namespace MekkysCakes.Application.Features.Reviews.Queries.GetProductReviews
             var totalCount = await repo.CountAsync(countSpec);
 
             // Map to DTOs
-            var reviewDTOs = _mapper.Map<IEnumerable<ReviewDTO>>(reviews);
+            var reviewDTOs = _mapper.Map<IEnumerable<ProductReviewDTO>>(reviews);
 
             // Return paginated result
-            return new PaginatedResult<ReviewDTO>
+            return new PaginatedResult<ProductReviewDTO>
             (
                 request.PageIndex,
                 reviewDTOs.Count(),

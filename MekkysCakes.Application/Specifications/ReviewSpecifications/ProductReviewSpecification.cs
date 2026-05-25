@@ -1,4 +1,7 @@
-﻿using MekkysCakes.Domain.Entities.ReviewModule;
+using MekkysCakes.Application.Features.Reviews.Queries.GetAllReviews;
+using MekkysCakes.Domain.Entities.ReviewModule;
+using MekkysCakes.Shared.DTOs.ReviewDTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace MekkysCakes.Application.Specifications.ReviewSpecifications
 {
@@ -10,7 +13,6 @@ namespace MekkysCakes.Application.Specifications.ReviewSpecifications
             AddInclude(r => r.User);
             ApplyPagination(skip, take);
 
-            // Use enums!
             switch (sort.ToLower())
             {
                 case "oldest":
@@ -23,6 +25,31 @@ namespace MekkysCakes.Application.Specifications.ReviewSpecifications
                     AddOrderBy(r => r.Rating);
                     break;
                 default: // "newest"
+                    AddOrderByDescending(r => r.CreatedAt);
+                    break;
+            }
+        }
+
+        public ProductReviewSpecification(ReviewQueryParams queryParams)
+            : base(ReviewSpecificationHelper.GetReviewCriteria(queryParams))
+        {
+            AddInclude(r => r.User);
+            AddThenInclude(r => r
+                .Include(r => r.Product)
+                .ThenInclude(p => p.Translations)
+            );
+
+            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
+
+            switch (queryParams.Sort)
+            {
+                case ReviewSortingOptions.Newest:
+                    AddOrderByDescending(r => r.CreatedAt);
+                    break;
+                case ReviewSortingOptions.Oldest:
+                    AddOrderBy(r => r.CreatedAt);
+                    break;
+                default:
                     AddOrderByDescending(r => r.CreatedAt);
                     break;
             }

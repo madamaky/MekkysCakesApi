@@ -6,29 +6,13 @@ namespace MekkysCakes.Application.Features.Products.Queries.GetAllProducts
 {
     public record GetAllProductsQuery(ProductQueryParams QueryParams) : IRequest<PaginatedResult<ProductDTO>>;
 
-    public class ProductQueryParams
+    public class ProductQueryParams : PaginatedQueryParams
     {
         public int? TypeId { get; set; }
         public int? ThemeId { get; set; }
         public List<int>? BadgeIds { get; set; }
         public string? Search { get; set; }
         public ProductSortingOptions Sort { get; set; }
-
-        private int _pageIndex = 1;
-        public int PageIndex
-        {
-            get { return _pageIndex; }
-            set { _pageIndex = value < 1 ? 1 : value; }
-        }
-
-        private const int DefaultPageSize = 5;
-        private const int MaxPageSize = 10;
-        private int _pageSize = DefaultPageSize;
-        public int PageSize
-        {
-            get { return _pageSize; }
-            set { _pageSize = value < 1 ? DefaultPageSize : (value > MaxPageSize ? MaxPageSize : value); }
-        }
     }
 
     public enum ProductSortingOptions

@@ -1,4 +1,4 @@
-﻿using MekkysCakes.Domain.Contracts;
+using MekkysCakes.Domain.Contracts;
 using MekkysCakes.Domain.Entities;
 using MekkysCakes.Persistence.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +20,9 @@ namespace MekkysCakes.Persistence.Repositories
         public async Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specification)
             => await SpecificationsEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specification).FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbContext.Set<TEntity>().ToListAsync();
+        public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity, TKey> specification)
-            => await SpecificationsEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specification).ToListAsync();
+            => await SpecificationsEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specification).AsNoTracking().ToListAsync();
 
         public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
         public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
