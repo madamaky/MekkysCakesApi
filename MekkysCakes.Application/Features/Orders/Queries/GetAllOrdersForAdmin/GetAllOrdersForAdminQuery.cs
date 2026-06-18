@@ -1,4 +1,5 @@
 using MediatR;
+using MekkysCakes.Domain.Entities.OrderModule;
 using MekkysCakes.Shared;
 using MekkysCakes.Shared.DTOs.OrderDTOs;
 
@@ -17,7 +18,7 @@ namespace MekkysCakes.Application.Features.Orders.Queries.GetAllOrdersForAdmin
         public string? Email { get; set; }
         public Guid? OrderId { get; set; } = null;
 
-        public OrderStatusDTO? OrderStatus { get; set; }
+        public OrderStatus? OrderStatus { get; set; }
         public OrderSortingOptions Sort { get; set; }
     }
 

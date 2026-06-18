@@ -8,16 +8,38 @@ namespace MekkysCakes.Persistence.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.Property(x => x.SubTotal)
-                .HasPrecision(8, 2);
+            builder.Property(o => o.ContactEmail)
+            .IsRequired()
+            .HasMaxLength(256);
 
-            builder.OwnsOne(x => x.Address, oEntity =>
-            {
-                oEntity.Property(x => x.FirstName).HasMaxLength(50);
-                oEntity.Property(x => x.LastName).HasMaxLength(50);
-                oEntity.Property(x => x.Street).HasMaxLength(50);
-                oEntity.Property(x => x.City).HasMaxLength(50);
-            });
+            builder.Property(o => o.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(20);
+
+            builder.Property(o => o.Address)
+                .IsRequired()
+                .HasMaxLength(500);
+
+            builder.Property(o => o.SubTotal)
+                .HasPrecision(18, 2);
+
+            builder.Property(o => o.OrderStatus)
+                .HasConversion<string>(); // store as "Pending" not 0
+
+            // User FK — no nav prop on ApplicationUser side
+            builder.HasOne(o => o.User)
+                .WithMany()
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // don't cascade-delete orders on user deletion
+
+            builder.HasOne(o => o.DeliveryMethod)
+                .WithMany()
+                .HasForeignKey(o => o.DeliveryMethodId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(o => o.Items)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade); // items are owned by the order
         }
     }
 }

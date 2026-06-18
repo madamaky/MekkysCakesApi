@@ -23,9 +23,9 @@ namespace MekkysCakes.Application.Features.Orders.Commands.CancelOrder
             if (order is null)
                 return Error.NotFound("Order.NotFound", $"Order With Id {request.OrderId} Was Not Found.");
 
-            var email = _currentUserService.Email;
-            if (order.UserEmail != email)
-                return Error.Validation("Order.Validation", $"User With Email {email} Does Not Have Order With Id {request.OrderId}.");
+            var userId = _currentUserService.UserId;
+            if (order.UserId != userId)
+                return Error.Validation("Order.Validation", $"User With Id {userId} Does Not Have Order With Id {request.OrderId}.");
 
             if (order.OrderStatus == OrderStatus.Cancelled)
                 return Error.Validation("Order.Validation", $"Order With Id {request.OrderId} Was Already Cancelled.");

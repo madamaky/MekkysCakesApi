@@ -36,7 +36,7 @@ namespace MekkysCakes.Application.Specifications.OrderSpecifications
 
             ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
         }
-        public OrderSpecification(string email) : base(order => order.UserEmail.ToLower() == email.ToLower())
+        public OrderSpecification(string email) : base(order => order.User.Email!.ToLower() == email.ToLower())
         {
             AddThenInclude(order => order
                 .Include(o => o.Items)
@@ -46,7 +46,7 @@ namespace MekkysCakes.Application.Specifications.OrderSpecifications
             AddOrderByDescending(O => O.OrderDate);
         }
 
-        public OrderSpecification(Guid id, string email) : base(order => order.Id == id && (string.IsNullOrEmpty(email) || order.UserEmail.ToLower() == email.ToLower()))
+        public OrderSpecification(Guid id, string email) : base(order => order.Id == id && (string.IsNullOrEmpty(email) || order.User.Email!.ToLower() == email.ToLower()))
         {
             AddThenInclude(order => order
                 .Include(o => o.Items)
